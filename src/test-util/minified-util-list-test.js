@@ -369,6 +369,18 @@ function runTests(loadInContext) {
 			assert(_.equals(_.sub(null, -1, 2), []));
 		});
 	});
+
+	describe('_.only()', function() {
+		it('selects one element', function() {
+			var _ = req();
+			var a = _(200, null, 1, 0, 34, 2, 3, 200), b= _();
+			
+			assert(_.equals(a.only(0), [200]));
+			assert(_.equals(a.only(2), [1]));
+			assert(_.equals(a.only(100), []));
+			assert(_.equals(b.only(100), []));
+		});
+	});
 	
 	describe('_.toObject()', function() {
 		it('single value', function() {
@@ -385,7 +397,7 @@ function runTests(loadInContext) {
 	describe('_.find()', function() {
 		it('single value', function() {
 			var _ = req();
-			var a = _(), b= _("a", 3, "c");
+			var a = _(), b= _("a", 3, "c", 3);
 			
 			assert.equal(_.find(a, 'a'), null);
 			assert.equal(_.find(b, 'a'), 0);
@@ -396,7 +408,7 @@ function runTests(loadInContext) {
 		});
 		it('function', function() {
 			var _ = req();
-			var a = _(), b= _("a", 3, "c");
+			var a = _(), b= _("a", 3, "c", 3);
 			
 			assert.equal(_.find(a, function(value) { return value == 'a'? 1 : null; }), null);
 			assert.equal(_.find(b, function(value) { return value == 'a'? 1 : null; }), 1);
@@ -404,8 +416,54 @@ function runTests(loadInContext) {
 			assert.equal(b.find(function(value) { return value == 3? 17 : null; }), 17);
 			assert.equal(a.find(function(value) { return value == 'c'? '3' : null; }), null);
 			assert.equal(b.find(function(value) { return value == 'c'? '3' : null; }), '3');
+			assert.equal(b.find(function(value, index) { return value == 3 ? index : null; }), 1);
+		});
+		it('index', function() {
+			var _ = req();
+			var l= _("a", 3, "c", 9, 3, 9);
+			
+			assert.equal(_.find(l, 3, 2), 4);
+			assert.equal(l.find(3, 3, 2), 4);
+			assert.equal(l.find(3, -2), 4);
+			assert.equal(l.find(3, -1), null);
 		});
 	});
+	
+	
+	describe('_.findLast()', function() {
+		it('single value', function() {
+			var _ = req();
+			var l= _("a", 3, "c", 9, 3, 9);
+			
+			assert.equal(_.findLast(l, 'a'), 0);
+			assert.equal(l.findLast(3), 4);
+			assert.equal(l.findLast(9), 5);
+		});
+		it('function', function() {
+			var _ = req();
+			var a = _(), b= _("a", 3, "c", 3);
+			
+			assert.equal(_.findLast(a, function(value) { return value == 'a'? 1 : null; }), null);
+			assert.equal(_.findLast(b, function(value) { return value == 'a'? 1 : null; }), 1);
+			assert.equal(a.findLast(function(value) { return value == 3? 17 : null; }), null);
+			assert.equal(b.findLast(function(value) { return value == 3? 17 : null; }), 17);
+			assert.equal(a.findLast(function(value) { return value == 'c'? '3' : null; }), null);
+			assert.equal(b.findLast(function(value) { return value == 'c'? '3' : null; }), '3');
+			assert.equal(b.findLast(function(value, index) { return value == 3 ? index : null; }), 3);
+		});
+		it('index', function() {
+			var _ = req();
+			var l= _("a", 3, "c", 9, 3, 9);
+			assert.equal(_.findLast(l, 3, 2), 1);
+			assert.equal(l.findLast(3, 3, 2), 1);
+			assert.equal(l.findLast(3, -2), 4);
+			assert.equal(l.findLast(3, -3), 1);
+			assert.equal(l.findLast(3, -5), 1);
+			assert.equal(l.findLast(3, -6), null);
+		});
+	});
+	
+	
 	
 	describe('_.contains()', function() {
 		it('finds value', function() {
@@ -590,7 +648,7 @@ function runTests(loadInContext) {
 	});
 	
 	describe('_.copyObj()', function() {
-		it('copy objects', function() {
+		it('copies objects', function() {
 			var _ = req();
 			var a = {a:2, b:1, c:4, '34':23, d:4};
 			var b = {a:2, b:1, d:4};
@@ -602,7 +660,7 @@ function runTests(loadInContext) {
 			assert(_.equals(_.copyObj(a, d), a));
 		});
 		
-		it('copy cond', function() {
+		it('copies cond', function() {
 			var _ = req();
 			var a = {a:2, b:1, c:4, '34':23, d:4};
 			var b = {a:2, b:1, d:4};
@@ -614,7 +672,23 @@ function runTests(loadInContext) {
 			assert(_.equals(_.copyObj(a, d, 1), a));
 		});
 	});
-		
+
+	describe('_.extend()', function() {
+		it('copies objects', function() {
+			var _ = req();
+			var a = {a:2, b:1, c:4, '34':23, d:4};
+			var b = {a:2, b:1, d:4};
+			var c = {a:2, b:2, c:4, '34':23, d:4};
+			var d = {};
+			assert(_.equals(_.extend({}), {}));
+			assert(_.equals(_.extend(d, {}, null, undef, {}), {}));
+			assert(_.equals(_.extend(d, {a: 222}, b, {a: undef}), b));
+			assert(_.equals(_.extend(d, null, {}, c), c));
+			assert(_.equals(_.extend(d, a), a));
+		});
+	});
+
+	
 	describe('_.trim()', function() {
 		it('strips space', function() {
 			var _ = req();

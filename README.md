@@ -2,66 +2,81 @@ Minified Web
 =============
 
 Quick Links: <a href="http://minifiedjs.com/">minifiedjs.com</a> - <a href="http://minifiedjs.com/api/">API</a> - <a href="http://minifiedjs.com/docs/">Docs</a>
-Latest version: <a href="http://minifiedjs.com/docs/beta2.html">beta 2</a> (<a href="CHANGES.md">changelog</a>)
+Latest version: <a href="http://minifiedjs.com/docs/beta3.html">beta 3</a> (<a href="CHANGES.md">changelog</a>)
 
 Overview
 ----------
-Minified Web is a universal JavaScript library for HTML applications. It gives you a clean and simple API that provides you 
-with everything that you need to work interact with the browser on an HTML page. 
-
-While the purpose and scope of Minified Web are comparable to jQuery and MooTools, its size is 
-smaller almost by an order of magnitude. The compressed size under 9kb, and the gzip'd size is less than 4kb. 
-You can make it even smaller if you don't require all modules of Minified Web. The build tool allows you to remove 
-everything that you don't need to reduce its size even more. 
+Minified.js is a client-side JavaScript library with low footprint (&lt;8kB) and a large feature set. 
+It offers jQuery-like features (DOM manipulation, animation, events, HTTP requests) and utility 
+functions (collections, date&amp;number formatting, date arithmtic, templates) with a simple, coherent API.
+  	
 
 Size Comparison
 -----------------
-For beta 2:
+For beta 3:
 <table>
 <tr><th>Name</th><th>Legacy IE Support</th><th>Compiled Size</th><th>Compiled and GZip'd</th></tr>
-<tr><td>minified-web.js</td><td>IE6 and higher</td><td>10.8kb</td><td>4838 bytes</td></tr>
-<tr><td>minified-web.noie.js</td><td>no</td><td>9.3kb</td><td>4092 bytes</td></tr>
-<tr><td>jQuery 1.10.2</td><td>IE6 and higher</td><td>91kb</td><td>32kb</td></tr>
-<tr><td>jQuery 2.0.3</td><td>no</td><td>82kb</td><td>29kb</td></tr>
-<tr><td>MooTools Core NoCompat 1.4.5</td><td>IE6 and higher</td><td>88kb</td><td>29kb</td></tr>
-<tr><td>Zepto.js 1.0</td><td>no</td><td>27kb</td><td>9.7kb</td></tr>
+<tr><th>Minified</th><td>no</td><td>19.1kb</td><td><strong>8075bytes</strong></td></tr>
+<tr><th>...with IE6-8 support</th><td>no</td><td>20.8kb</td><td>8828 bytes</td></tr>
+<tr><th>...Web Module only</th><td>yes</td><td>9.3kb</td><td><strong>4075 bytes</strong></td></tr>
+<tr><th>...Web Module with IE6-8 support</th><td>yes</td><td>11.1kb</td><td>4881 bytes</td></tr>
+<tr><th>jQuery 1.10.2</th><td>yes</td><td>91kb</td><td>32kb</td></tr>
+<tr><th>jQuery 2.0.3</th><td>no</td><td>82kb</td><td>29kb</td></tr>
+<tr><th>MooTools Core NoCompat 1.4.5</th><td>yes</td><td>88kb</td><td>29kb</td></tr>
+<tr><th>Zepto.js 1.0</th><td>no</td><td>27kb</td><td>9.7kb</td></tr>
 </table>
+
+
 
 Feature Comparison
 --------------------
-The goal of Minified Web is to provide everything you need on an HTML page to interact with the web browser. Everything else is out-of-scope. 
-Specifically, it does not include polyfills, a class framework, helper for JavaScript core types or similar things. 
-If you need them, <a href="http://microjs.com">microjs.com</a> is a great place to find them.
+The goal of Minified is to provide all the basics that you may need on an HTML page. 
 <table>
-<tr><th>Feature</th><th>Minified</th><th>jQuery</th><th>MooTools</th><th>Zepto.js</th></tr>
-<tr><td>CSS Selector</td><td>yes<div class="cmpExpl">CSS1 or browser engine</div></td><td>yes<div class="cmpExpl">CSS3 subset + extensions</div></td><td>yes<div class="cmpExpl">CSS3 subset + extensions</div></td><td>yes<div class="cmpExpl">browser engine</div></td></tr>
-<tr><td>CSS Style Changes</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
-<tr><td>CSS Class Changes</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
-<tr><td>Element Creation</td><td>yes</td> <td>yes<div class="cmpExpl">HTML-strings only</div></td> <td>yes</td> <td>yes<div class="cmpExpl">HTML-strings only</div></td></tr>
-<tr><td>Element Cloning</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
-<tr><td>DOM Manipulation</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
-<tr><td>Animation (numeric)</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes<div class="cmpExpl">CSS transitions only</div></td></tr>
-<tr><td>Animation (color)</td><td>yes</td> <td>no</td> <td>yes</td> <td>yes<div class="cmpExpl">CSS transitions only</div></td></tr>
-<tr><td>Events</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
-<tr><td>DOMReady</td><td>yes</td><td>yes</td><td>yes</td> <td>yes</td></tr>
-<tr><td>Ajax/XHR</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
-<tr><td>Promises/A+-compatible</td><td>yes</td> <td>yes</td> <td>no</td> <td>no</td></tr>
-<tr><td>JSON</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
-<tr><td>Cookies</td><td>yes</td> <td>no</td> <td>yes</td> <td>no</td></tr>
-<tr><td>Form Serialization</td><td>no</td> <td>yes</td> <td>no</td> <td>yes</td></tr>
-<tr><td>Array Helpers (Iteration)</td> <td>no</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
-<tr><td>AMD support</td> <td>yes</td> <td>yes</td> <td>no</td> <td>no</td></tr>
-<tr><td>Online Builder</td> <td>yes<div class="cmpExpl">modules and functions</div></td> <td>no</td> <td>yes<div class="cmpExpl">modules</div></td> <td>no</td></tr>
-<tr><td>Internet Explorer compatible</td> <td>yes</td> <td>yes<div class="cmpExpl">jQuery 1.x only</div></td> <td>yes</td> <td>no</td></tr>
+<tr><th>Feature</th><th>Minified</th><th>Minified Web</th><th>jQuery</th><th>MooTools</th><th>Zepto.js</th></tr>
+<tr><th>CSS Selector</th><td>yes<div class="cmpExpl">CSS1 or browser engine</div></td><td>yes<div class="cmpExpl">CSS1 or browser engine</div></td><td>yes<div class="cmpExpl">CSS3 subset + extensions</div></td><td>yes<div class="cmpExpl">CSS3 subset + extensions</div></td><td>yes<div class="cmpExpl">browser engine</div></td></tr>
+<tr><th>CSS Style Changes</th><td>yes</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
+<tr><th>CSS Class Changes</th><td>yes</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
+<tr><th>Element Creation</th><td>yes</td><td>yes</td> <td>yes<div class="cmpExpl">HTML-strings only</div></td> <td>yes</td> <td>yes<div class="cmpExpl">HTML-strings only</div></td></tr>
+<tr><th>Element Cloning</th><td>yes</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
+<tr><th>DOM Manipulation</th><td>yes</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
+<tr><th>Animation (numeric)</th><td>yes</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes<div class="cmpExpl">CSS transitions only</div></td></tr>
+<tr><th>Animation (color)</th><td>yes</td><td>yes</td> <td>no</td> <td>yes</td> <td>yes<div class="cmpExpl">CSS transitions only</div></td></tr>
+<tr><th>Events</th><td>yes</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
+<tr><th>DOMReady</th><td>yes</td><td>yes</td><td>yes</td><td>yes</td> <td>yes</td></tr>
+<tr><th>Ajax/XHR</th><td>yes</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
+<tr><th>Promises/A+-compatible</th><td>yes</td><td>yes</td> <td>yes</td> <td>no</td> <td>no</td></tr>
+<tr><th>JSON</th><td>yes</td><td>yes</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
+<tr><th>Cookies</th><td>yes</td><td>yes</td> <td>no</td> <td>yes</td> <td>no</td></tr>
+<tr><th>Form Serialization</th><td>yes</td><td>yes</td> <td>yes</td> <td>no</td> <td>yes</td></tr>
+<tr><th>Collection Helpers</th> <td>yes</td><td>no</td> <td>yes</td> <td>yes</td> <td>yes</td></tr>
+<tr><th>AMD support</th> <td>yes</td><td>yes</td> <td>yes</td> <td>no</td> <td>no</td></tr>
+<tr><th>Templates</th> <td>yes</td><td>no</td> <td>no</td> <td>no</td> <td>no</td></tr>
+<tr><th>Number Formatting</th> <td>yes</td><td>no</td> <td>no</td> <td>no</td> <td>no</td></tr>
+<tr><th>Date Formatting</th> <td>yes</td><td>no</td> <td>no</td> <td>no</td> <td>no</td></tr>
+<tr><th>Date Arithmetic</th> <td>yes</td><td>no</td> <td>no</td> <td>no</td> <td>no</td></tr>
+<tr><th>Online Builder</th> <td>yes<div class="cmpExpl">modules and functions</div></td><td>yes<div class="cmpExpl">modules and functions</div></td> <td>no</td> <td>yes<div class="cmpExpl">modules</div></td> <td>no</td></tr>
+<tr><th>Internet Explorer 6-8 compatible</th> <td>yes<div class="cmpExpl">IE-support optional</div></td><td>yes<div class="cmpExpl">IE-support optional</div></td> <td>yes<div class="cmpExpl">jQuery 1.x only</div></td> <td>yes</td> <td>no</td></tr>
 </table>
 
 
 What you can expect from Minified Web 
 --------------------------------------
 * General purpose functions to effectively write HTML-based web applications
-* A very small footprint. It will always be smaller than 4kb.
+* A very small footprint. The complete distribution will always be smaller than 8kB, and the Web module under 4kb.
 * A clean and simple, easy to use API.
 * A stable API that won't change.
+
+
+Building
+---------
+To build Minified, you need to install Node.js and Grunt. Then enter the Minified directory and install the dependencies:
+> npm install
+
+To build the whole project including the site, use
+> grunt all
+
+If you only want to compile the code, use 
+> grunt code
 
 
 Licensing
@@ -78,23 +93,11 @@ Don't get me wrong, they are fantastic libraries and I really like to use them, 
 This code needs to be parsed and executed on every page that you include them on.  For me, that just feels too large for what that they offer, 
 and especially for what I need. The 30kb size that they have after gzipping will can also cause a significant delay on low-bandwidth networks.
 
-In the last years I worked on some personal projects (<a href="http://jarfiller.org">jarfiller.org</a> is the only one that has been published), 
+In the last years I worked on some personal projects (<a href="http://timjansen.github.io/jarfiller/">jarfiller.org</a> is the only one that has been published), 
 and when I work on them, I usually strive for perfection. Every unnecessary kilobyte hurts.  So instead of using jQuery, I started writing my own 
 little helper functions to replace jQuery functionality without the overhead. As I worked on several other projects, I wrote more and more helper 
 functions and started sharing them between projects until they became a library of their own.  By now they are so mature that I believe that this 
 library, called Minified, became a valid alternative to jQuery and MooTools at a fraction of the size.
-
-What you see here is only the beginning, a 4kb module for building web sites. The plan is to have three modules, each under 4kb:
-<ul><li><strong>Minified Web</strong> is a browser interaction library, comparable to jQuery or MooTools. It is available now.</li>
-<li><strong>Minified Util</strong> offers utilities for lists and maps, functions, promises, string and number formatting, date handling and 
-internationalization. Its scope and size can be compared to <a href="http://underscorejs.org/">Underscore</a>, but it omits the more 
-obscure functional helpers and replaces them with date and string helpers. You can find an early version in the /src directory
-on GitHub.</li>
-<li><strong>Minified Apps</strong> will be a MVC-oriented library for single-page applications and complex multi-page apps.
-The scope will be somewhat similar to Backbone or Angular.js, but with a Plain-Old-JSON-Object (POJO) principles and a template/binding
-concept that is closely tied to the page's DOM and is predestinated for <a href="http://www.w3.org/TR/components-intro/#template-section">HTML5 templates</a>.
-It is built upon the other two modules. A preview should be available by the end of 2013.</li>
-</ul>
 
 Thank you for checking out Minified.
 			Tim Jansen

@@ -6,8 +6,8 @@
 //
 //
 
-var _ = (require('minifiedUtil') || require('minified'))._;
-
+var isCommonJs = typeof module != 'undefined' && !!module.exports;
+var _ = isCommonJs ? require('minified-headless') : (require('minifiedUtil') || require('minified'))._;
 
 
 // parses the source, returns an array of objects describing sections that can be enabled/disabled
@@ -23,6 +23,7 @@ function parseSourceSections(src) {
 			requiredBy: {}, // contains ids->1
 			syntax: [],
 			example: [],
+			see: [],
 			params: [] // contains {name, desc} each; @return has '@return' as name
 		};
 	}
@@ -37,7 +38,7 @@ function parseSourceSections(src) {
 			if (tagmatch) { // comment tag found
 				var tag = tagmatch[1];
 				var content = _.trim(l.replace(/^\s*@[a-z]+\s*/, '')); // remove tag from line
-				if (tag == 'syntax' || tag == 'example')
+				if (tag == 'syntax' || tag == 'example' || tag == 'see')
 					currentSection[tag].push(content);
 				else if (tag == 'requires') {
 					if (content.length)
@@ -231,7 +232,7 @@ function serializeEnabledSections(sections, enabledSections) {
 		}
 	});
 	txt = txt.replace(/,\s*$/, '.\n'); // remove last comma with period
-	return txt;
+	return txt + "\n\n";
 }
 
 //adds possibly missing sections to configuration
@@ -299,4 +300,12 @@ function deserializeEnabledSections(sections, sectionMap, src) {
 	return null;
 }
 
+if (isCommonJs) {
+	module.exports = { 
+			parseSourceSections: parseSourceSections,
+			prepareSections: prepareSections,
+			deserializeEnabledSections: deserializeEnabledSections,
+			compile: compile
+	};
+}
 
